@@ -5,11 +5,8 @@ import java.util.logging.Logger;
 import me.cr3dos.mobSpawner.Commands.mobSpawnerMSCommand;
 import me.cr3dos.mobSpawner.Listeners.*;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;

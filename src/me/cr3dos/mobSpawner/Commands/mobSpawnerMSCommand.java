@@ -2,12 +2,10 @@ package me.cr3dos.mobSpawner.Commands;
 
 import me.cr3dos.mobSpawner.mobSpawner;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Player;
 
 
