@@ -1,7 +1,8 @@
-bin/** 
-
+bin/ 
 .classpath
 
 .project
 
-.settings
+.settings/
+
+.gitignore
