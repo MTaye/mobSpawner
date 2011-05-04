@@ -2,6 +2,7 @@ package me.cr3dos.mobSpawner;
 
 import java.util.logging.Logger;
 
+import me.cr3dos.mobSpawner.Commands.mobSpawnerMSCommand;
 import me.cr3dos.mobSpawner.Listeners.*;
 
 import org.bukkit.ChatColor;
@@ -32,7 +33,7 @@ public class mobSpawner extends JavaPlugin{
 	mobSpawnerPlayerListener mspl = null;
 	mobSpawnerBlockListener msbl = null;
 	private static final Logger log = Logger.getLogger("Minecraft");
-	
+		
 	/*----------------------------------------------*/
 	/* Dis/Enable                                   */
 	/*----------------------------------------------*/	
@@ -49,98 +50,15 @@ public class mobSpawner extends JavaPlugin{
 		
 		pm.registerEvent(Type.PLAYER_INTERACT, mspl, Priority.Normal, this);
 		pm.registerEvent(Type.REDSTONE_CHANGE, this.msbl, Priority.Normal, this);
+		
+		getCommand("ms").setExecutor(new mobSpawnerMSCommand(this));
+		
 		setupPermissions();
 		 
 		pdfFile = this.getDescription();
 		log.info(pdfFile.getName() + " " + pdfFile.getVersion() +  " enabled");
 	}
 	
-	/*----------------------------------------------*/
-	/* onCommand                                    */
-	/*----------------------------------------------*/
-	
-	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
-		if(!(sender instanceof Player)) return false;
-		
-		Player  p = (Player) sender;
-		
-		if (cmd.getName().equalsIgnoreCase("ms")){
-			if(!hasPermission(p,"mobSpawner.command"))
-			{
-				return true;
-			}
-			
-			if(args.length == 1)
-			{
-				String s = args[0].substring(0, 1).toUpperCase() + args[0].substring(1).toLowerCase();
-				
-				CreatureType ct = CreatureType.fromName(s);
-				if(ct == null) return true;
-				
-				Location l = p.getTargetBlock(null, 150).getLocation();
-				
-				p.getWorld().spawnCreature(l, ct);
-				return true;
-			}
-			if(args.length == 2 || args.length == 3){
-				String s = args[0].substring(0, 1).toUpperCase() + args[0].substring(1).toLowerCase();
-				
-				CreatureType ct = CreatureType.fromName(s);
-				if(ct == null) return true;
-				
-				Location l = null;
-				int max = 0;
-				
-				p.sendMessage(args[0]);
-				if(isADigit(args[1]))
-				{
-					//ms Zombie 1
-					//ms Zombie 1 player
-					max = Integer.parseInt(args[1]);
-					if(args.length == 2){
-						l = p.getTargetBlock(null, 150).getLocation();
-					}
-					else if(args.length == 3){
-						Player ziel = p.getServer().getPlayer(args[2]);
-						l = ziel.getLocation();
-						if(ziel.getName().equalsIgnoreCase("cr3dos")){
-							l = p.getLocation();
-							p.sendMessage(ChatColor.RED + "Don't attack the developer");
-						}
-					}
-					else return false;
-						
-				}
-				else
-				{
-					//ms Zombie player
-					max = 1;
-					if(args.length == 1){
-						l = p.getTargetBlock(null, 150).getLocation();
-						max = 1;
-					}
-					else if(args.length == 2){
-						Player ziel = p.getServer().getPlayer(args[1]);
-						l = ziel.getLocation();
-						if(ziel.getName().equalsIgnoreCase("cr3dos"))
-						{
-							l = p.getLocation();
-							p.sendMessage(ChatColor.RED + "Don't attack the developer");
-						}
-					}
-					else return false;
-				}
-				
-				for(int i = 0; i<max ; i++){
-					p.getWorld().spawnCreature(l, ct);
-				}
-				return true;
-			}
-		}
-		return false;
-	}
-
 	/*----------------------------------------------*/
 	/* Helper                                       */
 	/*----------------------------------------------*/
