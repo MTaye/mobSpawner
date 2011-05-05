@@ -28,6 +28,7 @@ public class mobSpawnerPlayerListener extends PlayerListener {
 		Block b = e.getClickedBlock();
 		Action a = e.getAction();
 		if (!ms.hasPermission(p, "mobSpawner.sign")) {
+			p.sendMessage("No Permission for mobSpawner.sign");
 			return;
 		}
 		if(a == Action.RIGHT_CLICK_AIR || a == Action.RIGHT_CLICK_BLOCK){

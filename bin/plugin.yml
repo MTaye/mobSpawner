@@ -8,3 +8,6 @@ commands:
   ms:
     description: spawn mobs
     usage: /ms <mobname> (<amount>) (<Player>)
+  msset:
+    description: changing Settings
+    usage: /msset <setting> <value>    

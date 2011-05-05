@@ -3,6 +3,7 @@ package me.cr3dos.mobSpawner;
 import java.util.logging.Logger;
 
 import me.cr3dos.mobSpawner.Commands.mobSpawnerMSCommand;
+import me.cr3dos.mobSpawner.Commands.mobSpawnerMSsetCommand;
 import me.cr3dos.mobSpawner.Listeners.*;
 
 import org.bukkit.Location;
@@ -48,8 +49,12 @@ public class mobSpawner extends JavaPlugin{
 		pm.registerEvent(Type.PLAYER_INTERACT, mspl, Priority.Normal, this);
 		pm.registerEvent(Type.REDSTONE_CHANGE, this.msbl, Priority.Normal, this);
 		
-		getCommand("ms").setExecutor(new mobSpawnerMSCommand(this));
-		
+		mobSpawnerMSCommand msCommand = new mobSpawnerMSCommand(this);
+		mobSpawnerMSsetCommand msSetCommand = new mobSpawnerMSsetCommand(this);
+		getCommand("ms").setExecutor(msCommand);
+		getCommand("MS").setExecutor(msCommand);
+		getCommand("msset").setExecutor(msSetCommand);
+
 		setupPermissions();
 		 
 		pdfFile = this.getDescription();
