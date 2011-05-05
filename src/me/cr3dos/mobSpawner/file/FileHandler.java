@@ -2,12 +2,15 @@ package me.cr3dos.mobSpawner.file;
 
 import java.io.File;
 
-import me.cr3dos.mobSpawner.mobSpawner;
 
 import org.bukkit.util.config.Configuration;
 
 public class FileHandler
 {
+	/**
+	 * Settings
+	 * signWait how long waiting for next pressing on a sign
+	 */
 	private static String mainDirectory = "plugins/mobSpawner";
 	private static File file = new File(mainDirectory + File.separator + "config.yml");
 	
@@ -58,6 +61,12 @@ public class FileHandler
         config.save();
     }
 
+    /**
+     * 
+     * @param key
+     * @param input
+     * @return
+     */
 	public static boolean writeInt(String key, String input) {
 		try
 		{

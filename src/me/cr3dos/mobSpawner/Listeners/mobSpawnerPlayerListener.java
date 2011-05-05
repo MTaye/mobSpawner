@@ -1,6 +1,10 @@
 package me.cr3dos.mobSpawner.Listeners;
 
+import java.util.Date;
+import java.util.HashMap;
+
 import me.cr3dos.mobSpawner.mobSpawner;
+import me.cr3dos.mobSpawner.file.FileHandler;
 
 import org.bukkit.Material;
 import org.bukkit.block.*;
@@ -15,6 +19,7 @@ import org.bukkit.event.player.PlayerListener;
  */
 public class mobSpawnerPlayerListener extends PlayerListener {
 	mobSpawner ms = null;
+	HashMap<Player, Date> users; //signpress
 	
 	public mobSpawnerPlayerListener(mobSpawner ms)
 	{
@@ -23,7 +28,16 @@ public class mobSpawnerPlayerListener extends PlayerListener {
 	
 	public void onPlayerInteract(PlayerInteractEvent e)
 	{
+		
 		Player p = e.getPlayer();
+		if(users.containsKey(p))
+		{
+			if(FileHandler.readInt("signWait")>= ms.differenz(new Date(),users.get(p)))
+			{
+				return;
+			}
+			users.remove(p);
+		}
 		
 		Block b = e.getClickedBlock();
 		Action a = e.getAction();
@@ -38,9 +52,11 @@ public class mobSpawnerPlayerListener extends PlayerListener {
 				if (state instanceof Sign){
 					s = (Sign) state;
 					signPress(p, s);
+					users.put(p, new Date());
 				}//if sign post
 			}//if material sign
 		}//if right click
+		
 	}//onPlayerInteract
 
 	/**
