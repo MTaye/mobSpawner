@@ -10,6 +10,7 @@ public class FileHandler
 	/**
 	 * Settings
 	 * signWait how long waiting for next pressing on a sign
+	 * DebugLevel the Level of debugging send message of this person
 	 */
 	private static String mainDirectory = "plugins/mobSpawner";
 	private static File file = new File(mainDirectory + File.separator + "config.yml");
@@ -19,7 +20,7 @@ public class FileHandler
 	/*----------------------------------------------*/
 	/* staring/load                                 */
 	/*----------------------------------------------*/	
-	public static Configuration load(){
+	private static Configuration load(){
         try {
             Configuration config = new Configuration(file);
             config.load();

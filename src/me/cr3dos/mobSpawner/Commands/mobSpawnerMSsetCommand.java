@@ -34,6 +34,10 @@ public class mobSpawnerMSsetCommand implements CommandExecutor {
 					sender.sendMessage(ChatColor.RED + "[" + plugin.getDescription().getName() + "]" + "Could not change signTime");
 					return true;
 				}
+				else
+				{
+					return true;
+				}
 			}
 		}
 		return false;

@@ -11,3 +11,6 @@ commands:
   msset:
     description: changing Settings
     usage: /msset <setting> <value>    
+  msdebug:
+    description: changing Debuglevel
+    usage: /msdebug <level>    

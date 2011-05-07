@@ -5,9 +5,11 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.logging.Logger;
 
+import me.cr3dos.mobSpawner.Commands.mobSpawnerDebugCommand;
 import me.cr3dos.mobSpawner.Commands.mobSpawnerMSCommand;
 import me.cr3dos.mobSpawner.Commands.mobSpawnerMSsetCommand;
 import me.cr3dos.mobSpawner.Listeners.*;
+import me.cr3dos.mobSpawner.file.FileHandler;
 
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -33,6 +35,7 @@ public class mobSpawner extends JavaPlugin{
 	PluginDescriptionFile pdfFile;
 	mobSpawnerPlayerListener mspl = null;
 	mobSpawnerBlockListener msbl = null;
+	mobSpawnerDebugCommand msDebug = null;
 	private static final Logger log = Logger.getLogger("Minecraft");
 		
 	/*----------------------------------------------*/
@@ -48,6 +51,7 @@ public class mobSpawner extends JavaPlugin{
 		PluginManager pm = getServer().getPluginManager();
 		mspl = new mobSpawnerPlayerListener(this);
 		msbl = new mobSpawnerBlockListener(this);
+		msDebug = new mobSpawnerDebugCommand(this);
 		
 		pm.registerEvent(Type.PLAYER_INTERACT, mspl, Priority.Normal, this);
 		pm.registerEvent(Type.REDSTONE_CHANGE, this.msbl, Priority.Normal, this);
@@ -57,9 +61,10 @@ public class mobSpawner extends JavaPlugin{
 		getCommand("ms").setExecutor(msCommand);
 		getCommand("MS").setExecutor(msCommand);
 		getCommand("msset").setExecutor(msSetCommand);
+		getCommand("msdebug").setExecutor(msDebug);
 
 		setupPermissions();
-		 
+		FileHandler.onStartUp(); 
 		pdfFile = this.getDescription();
 		log.info(pdfFile.getName() + " " + pdfFile.getVersion() +  " enabled");
 	}
