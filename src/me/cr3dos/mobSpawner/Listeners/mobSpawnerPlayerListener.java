@@ -20,10 +20,11 @@ import org.bukkit.event.player.PlayerListener;
  */
 public class mobSpawnerPlayerListener extends PlayerListener {
 	mobSpawner ms = null;
-	HashMap<String, Date> users = new HashMap<String, Date>(); //signpress
+	HashMap<String, Date> users;
 	
 	public mobSpawnerPlayerListener(mobSpawner ms)
 	{
+		users = new HashMap<String, Date>(); //signpress
 		this.ms = ms;
 	}
 	
@@ -34,10 +35,8 @@ public class mobSpawnerPlayerListener extends PlayerListener {
 		
 		if(users.containsKey(p.getName()))
 		{
-			if(mobSpawnerDebugCommand.getDebugLevel().equalsIgnoreCase("a") || mobSpawnerDebugCommand.getDebugLevel().equalsIgnoreCase("b")) p.sendMessage("user is in hashmap");
-			int diff = ms.differenz(new Date(),users.get(p));
-			if(mobSpawnerDebugCommand.getDebugLevel().equalsIgnoreCase("a") || mobSpawnerDebugCommand.getDebugLevel().equalsIgnoreCase("b")) p.sendMessage("Different is:" + diff);
-			if(FileHandler.readInt("signWait")>= diff)
+			int diff = ms.differenz(new Date(),users.get(p.getName()));
+			if(FileHandler.readInt("signTime")>= diff)
 			{
 				return;
 			}
@@ -56,11 +55,12 @@ public class mobSpawnerPlayerListener extends PlayerListener {
 				BlockState state = b.getState();
 				Sign s = null;
 				if (state instanceof Sign){
-					if(mobSpawnerDebugCommand.getDebugLevel().equalsIgnoreCase("a") || mobSpawnerDebugCommand.getDebugLevel().equalsIgnoreCase("b")) p.sendMessage("right click on a sign");
 					s = (Sign) state;
+					if(mobSpawnerDebugCommand.getDebugLevel().equalsIgnoreCase("a") || mobSpawnerDebugCommand.getDebugLevel().equalsIgnoreCase("b")) p.sendMessage(p.getName() + "pressed sign");
+					Date d1 = new Date();
+					users.put(p.getName(), d1);
 					signPress(p, s);
-					users.put(p.getName(), new Date());
-				}//if sign post
+				}//if sign
 			}//if material sign
 		}//if right click
 		
@@ -84,7 +84,7 @@ public class mobSpawnerPlayerListener extends PlayerListener {
 				ms.spawnMob(woerter[0],1,ms.addLineToLocation(s.getBlock().getLocation(),s.getLine(3)),p);
 			}
 			else if(woerter.length == 2){
-				if(ms.isADigit(woerter[1])){
+				if(mobSpawner.isADigit(woerter[1])){
 					ms.spawnMob(woerter[0],Integer.parseInt(woerter[1]),ms.addLineToLocation(s.getBlock().getLocation(),s.getLine(3)),p);
 				}
 				else{

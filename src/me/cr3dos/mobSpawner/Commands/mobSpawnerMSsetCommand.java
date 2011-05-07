@@ -19,7 +19,7 @@ public class mobSpawnerMSsetCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(!plugin.hasPermission((Player)sender, "mobSpawner.settings"))
+		if(!plugin.hasPermission((Player)sender, "mobSpawner.command.setting"))
 		{
 			sender.sendMessage(ChatColor.RED + "No permission for changing settings");
 			return true;
@@ -29,15 +29,21 @@ public class mobSpawnerMSsetCommand implements CommandExecutor {
 		{
 			if(args[0].equalsIgnoreCase("signTime"))
 			{
-				if (FileHandler.writeInt("signWait", args[1]) == false)
+				if (FileHandler.writeInt("signTime", args[1]) == false)
 				{
 					sender.sendMessage(ChatColor.RED + "[" + plugin.getDescription().getName() + "]" + "Could not change signTime");
-					return true;
+					
 				}
-				else
+				return true;
+			}
+			else if(args[0].equalsIgnoreCase("cmdTime"))
+			{
+				if (FileHandler.writeInt("cmdTime", args[1]) == false)
 				{
-					return true;
+					sender.sendMessage(ChatColor.RED + "[" + plugin.getDescription().getName() + "]" + "Could not change cmdTime");
+					
 				}
+				return true;
 			}
 		}
 		return false;

@@ -1,5 +1,6 @@
 package me.cr3dos.mobSpawner.Listeners;
 
+
 import me.cr3dos.mobSpawner.mobSpawner;
 
 import org.bukkit.Material;
@@ -41,7 +42,7 @@ public class mobSpawnerBlockListener extends BlockListener {
 								ms.spawnMob(woerter[0],1,sign.getWorld(), ms.addLineToLocation(sign.getBlock().getLocation(),sign.getLine(3)));
 							}
 							else if(woerter.length == 2){
-								if(ms.isADigit(woerter[1])){
+								if(mobSpawner.isADigit(woerter[1])){
 									ms.spawnMob(woerter[0],Integer.parseInt(woerter[1]),sign.getWorld(),ms.addLineToLocation(sign.getBlock().getLocation(),sign.getLine(3)));
 								}
 								else{

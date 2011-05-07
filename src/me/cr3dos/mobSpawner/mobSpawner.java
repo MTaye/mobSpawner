@@ -126,6 +126,7 @@ public class mobSpawner extends JavaPlugin{
 	 * @param location: whiche location
 	 */
 	public void spawnMob(String name, int anz, World world, Location location) {
+		if(name.length() <2) return;
 		name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
 		CreatureType ct = CreatureType.fromName(name);
 		if(ct == null){
@@ -148,13 +149,11 @@ public class mobSpawner extends JavaPlugin{
 		this.spawnMob(name, anz, p.getWorld(), location);
 	}
 	
-	@SuppressWarnings("deprecation")
 	public int differenz(Date now, Date old) {
-		
 		Calendar cal_1 = new GregorianCalendar();
-		Calendar cal_2 = new GregorianCalendar();
-		cal_1.set(old.getYear(), old.getMonth(), old.getDate(), old.getHours(), old.getMinutes(), old.getSeconds());                     				
-		cal_2.set(now.getYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());            
+		cal_1.setTime(old);
+		Calendar cal_2 = new GregorianCalendar();       
+		cal_2.setTime(now);
 		long time = cal_2.getTime().getTime() - cal_1.getTime().getTime();  
 		int s = (int)time / 1000;     					
 		
@@ -163,7 +162,7 @@ public class mobSpawner extends JavaPlugin{
 	/*----------------------------------------------*/
 	/* Checker                                      */
 	/*----------------------------------------------*/
-	public boolean isADigit(String string) {
+	public static boolean isADigit(String string) {
 		try
 		{
 			Integer.parseInt(string);
