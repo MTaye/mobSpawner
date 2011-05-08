@@ -10,7 +10,7 @@ commands:
     usage: /ms <mobname> (<amount>) (<Player>)
   msset:
     description: changing Settings
-    usage: /msset <setting> <value>    
+    usage: /msset <setting> <value>
   msdebug:
     description: changing Debuglevel
-    usage: /msdebug <level>    
+    usage: /msdebug <level> 
