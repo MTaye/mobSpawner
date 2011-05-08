@@ -21,7 +21,6 @@ public class mobSpawnerMSsetCommand implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if(!plugin.hasPermission((Player)sender, "mobSpawner.command.setting"))
 		{
-			sender.sendMessage(ChatColor.RED + "No permission for changing settings");
 			return true;
 		}
 		
