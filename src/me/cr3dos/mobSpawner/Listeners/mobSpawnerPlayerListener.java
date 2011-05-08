@@ -50,7 +50,7 @@ public class mobSpawnerPlayerListener extends PlayerListener {
 			return;
 		}
 		if(a == Action.RIGHT_CLICK_AIR || a == Action.RIGHT_CLICK_BLOCK){
-			
+			if(null == b) return;
 			if(b.getType() == Material.SIGN_POST){
 				BlockState state = b.getState();
 				Sign s = null;

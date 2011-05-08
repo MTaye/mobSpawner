@@ -76,7 +76,7 @@ public class mobSpawner extends JavaPlugin{
 	 * add some blocks in a specified direction
 	 * @param location: location position of the current Location
 	 * @param line: String in the format: direction numberofblocks
-	 * @return the new Locatio
+	 * @return the new Location
 	 */
 	public Location addLineToLocation(Location location, String line) {
 		if(line.trim().equals("")) ;
@@ -127,7 +127,8 @@ public class mobSpawner extends JavaPlugin{
 	 */
 	public void spawnMob(String name, int anz, World world, Location location) {
 		if(name.length() <2) return;
-		name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+		if(name.equalsIgnoreCase("PigZombie")) name = "PigZombie";
+		else name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
 		CreatureType ct = CreatureType.fromName(name);
 		if(ct == null){
 			return;
