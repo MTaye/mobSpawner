@@ -1,0 +1,16 @@
+name: MobSpawner
+main: me.cr3dos.mobSpawner.mobSpawner
+version: 1.3.2
+author: cr3dos
+description: >
+             A Plugin for spawn mobs
+commands:
+  ms:
+    description: spawn mobs
+    usage: /ms <mobname> (<amount>) (<Player>)
+  msset:
+    description: changing Settings
+    usage: /msset <setting> <value>
+  msdebug:
+    description: changing Debuglevel
+    usage: /msdebug <level> 
