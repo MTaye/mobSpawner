@@ -23,8 +23,7 @@ public class mobSpawnerMSsetCommand implements CommandExecutor
 	public boolean onCommand(CommandSender sender, Command cmd,
 			String commandLabel, String[] args)
 	{
-		if (!plugin
-				.hasPermission((Player) sender, "mobSpawner.command.setting"))
+		if (!plugin.hasPermission((Player) sender, "mobSpawner.command.setting"))
 		{
 			return true;
 		}

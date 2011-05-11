@@ -24,6 +24,7 @@ public class FileHandler
 	/*----------------------------------------------*/
 	private static Configuration load()
 	{
+		deletSecondFolder();
 		try
 		{
 			Configuration config = new Configuration(file);
@@ -37,10 +38,13 @@ public class FileHandler
 		}
 		return null;
 	}
+	
 
 	public static void onStartUp()
 	{
 		new File(mainDirectory).mkdir();
+		
+		deletSecondFolder();
 
 		if (!file.exists())
 		{
@@ -57,6 +61,26 @@ public class FileHandler
 		config = load();
 	}
 
+	private static void deletSecondFolder()
+	{
+		if(new File("MobSpawner").exists())
+		{
+			File f = new File("MobSpawner");
+			FileHandler.deleteFolders(f);
+			f.delete();
+		}
+	}
+	
+	private static void deleteFolders(File file)
+	{
+		for (File f : file.listFiles())
+		{
+			if (f.isDirectory()) deleteFolders(f);
+			else f.delete();
+		}
+		deletSecondFolder();
+	}
+
 	/*----------------------------------------------*/
 	/* writing */
 	/*----------------------------------------------*/
@@ -64,6 +88,7 @@ public class FileHandler
 	{
 		config.setProperty(key, input);
 		config.save();
+		deletSecondFolder();
 	}
 
 	/**
@@ -78,8 +103,10 @@ public class FileHandler
 		{
 			config.setProperty(key, input);
 			config.save();
+			deletSecondFolder();
 			return true;
 		}
+		deletSecondFolder();
 		return false;
 
 	}
