@@ -53,7 +53,34 @@ public class mobSpawnerMSsetCommand implements CommandExecutor
 				return true;
 			}
 		}
+		else if(args.length == 1)
+		{
+			if(mobSpawner.isASupportedMob(args[0]))
+			{
+				if(plugin.hasPermission((Player) sender, "mobSpawner.command.toggleMob"))
+				if (args[0].length() < 2 || null == args[0]) return true;
+				if (args[0].equalsIgnoreCase("PigZombie")) args[0] = "PigZombie";
+				else args[0] = args[0].substring(0, 1).toUpperCase()
+						+ args[0].substring(1).toLowerCase();
+				
+				this.toggleSetting("mob." + args[0]);
+				sender.sendMessage(args[0] + " is" + (FileHandler.read("mob." + args[0]).equalsIgnoreCase("true")? " on": " off" ));
+				return true;
+			}
+		}
 		return false;
+	}
+	
+	public void toggleSetting(String cmd)
+	{
+		if (FileHandler.read(cmd).equalsIgnoreCase("true"))
+		{
+			FileHandler.write(cmd, "false");
+		}
+		else
+		{
+			FileHandler.write(cmd, "true");
+		}
 	}
 
 }

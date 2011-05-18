@@ -135,10 +135,11 @@ public class mobSpawner extends JavaPlugin
 	 */
 	public void spawnMob(String name, int anz, World world, Location location)
 	{
-		if (name.length() < 2) return;
+		if (name.length() < 2 || null == name) return;
 		if (name.equalsIgnoreCase("PigZombie")) name = "PigZombie";
 		else name = name.substring(0, 1).toUpperCase()
 				+ name.substring(1).toLowerCase();
+		if(FileHandler.read("mob." + name) == null || FileHandler.read("mob." + name).equalsIgnoreCase("false"))  return;
 		CreatureType ct = CreatureType.fromName(name);
 		if (ct == null)
 		{
@@ -192,6 +193,23 @@ public class mobSpawner extends JavaPlugin
 		}
 	}
 
+	public static boolean isASupportedMob(String mobname)
+	{
+		if(mobname.equalsIgnoreCase("Pig")) return true;
+	    if(mobname.equalsIgnoreCase("Wolf")) return true;
+	    if(mobname.equalsIgnoreCase("Sheep")) return true;
+	    if(mobname.equalsIgnoreCase("Cow")) return true;
+	    if(mobname.equalsIgnoreCase("Spider")) return true;
+	    if(mobname.equalsIgnoreCase("Zombie")) return true;
+		if(mobname.equalsIgnoreCase("Skeleton")) return true;
+	    if(mobname.equalsIgnoreCase("Chicken")) return true;
+	    if(mobname.equalsIgnoreCase("Squid")) return true;
+	    if(mobname.equalsIgnoreCase("PigZombie")) return true;
+	    if(mobname.equalsIgnoreCase("Creeper")) return true;
+	    if(mobname.equalsIgnoreCase("Ghast")) return true;
+	    if(mobname.equalsIgnoreCase("slime")) return true;
+		return false;
+	}
 	/*----------------------------------------------*/
 	/* Permission */
 	/*----------------------------------------------*/

@@ -59,6 +59,27 @@ public class FileHandler
 		}
 
 		config = load();
+		defaultSetting();
+	}
+
+
+	private static void defaultSetting()
+	{
+		if(null == config.getProperty("cmdTime")) write("cmdTime", "0");
+		if(null == config.getProperty("signTime")) write("signTime", "0");
+		if(null == config.getProperty("mob.Wolf")) write("mob.Wolf", "true");
+		if(null == config.getProperty("mob.Pig")) write("mob.Pig", "true");
+		if(null == config.getProperty("mob.Sheep")) write("mob.Sheep", "true");
+		if(null == config.getProperty("mob.Cow")) write("mob.Cow", "true");
+		if(null == config.getProperty("mob.Spider")) write("mob.Spider", "true");
+		if(null == config.getProperty("mob.Zombie")) write("mob.Zombie", "true");
+		if(null == config.getProperty("mob.Skeleton")) write("mob.Skeleton", "true");
+		if(null == config.getProperty("mob.Chicken")) write("mob.Chicken", "true");
+		if(null == config.getProperty("mob.Squid")) write("mob.Squid", "true");
+		if(null == config.getProperty("mob.PigZombie")) write("mob.PigZombie", "true");
+		if(null == config.getProperty("mob.Creeper")) write("mob.Creeper", "true");
+		if(null == config.getProperty("mob.Ghast")) write("mob.Ghast", "true");
+		if(null == config.getProperty("mob.Slime")) write("mob.Slime", "true");
 	}
 
 	private static void deletSecondFolder()
