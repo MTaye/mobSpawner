@@ -1,6 +1,8 @@
 package me.cr3dos.mobSpawner.file;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 
 import me.cr3dos.mobSpawner.mobSpawner;
 
@@ -14,8 +16,7 @@ public class FileHandler
 	 * waiting for next spawncommand
 	 */
 	private static String mainDirectory = "plugins/mobSpawner";
-	private static File file = new File(mainDirectory + File.separator
-			+ "config.yml");
+	private static File file = new File(mainDirectory + File.separator+ "config.yml");
 
 	private static Configuration config;
 
