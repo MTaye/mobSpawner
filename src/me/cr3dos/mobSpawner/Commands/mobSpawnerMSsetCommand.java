@@ -20,8 +20,7 @@ public class mobSpawnerMSsetCommand implements CommandExecutor
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd,
-			String commandLabel, String[] args)
+	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
 	{
 		if (!plugin.hasPermission((Player) sender, "mobSpawner.command.setting"))
 		{
@@ -34,9 +33,7 @@ public class mobSpawnerMSsetCommand implements CommandExecutor
 			{
 				if (FileHandler.writeInt("signTime", args[1]) == false)
 				{
-					sender.sendMessage(ChatColor.RED + "["
-							+ plugin.getDescription().getName() + "]"
-							+ "Could not change signTime");
+					sender.sendMessage(ChatColor.RED + "[" + plugin.getDescription().getName() + "]" + "Could not change signTime");
 
 				}
 				return true;
@@ -45,32 +42,28 @@ public class mobSpawnerMSsetCommand implements CommandExecutor
 			{
 				if (FileHandler.writeInt("cmdTime", args[1]) == false)
 				{
-					sender.sendMessage(ChatColor.RED + "["
-							+ plugin.getDescription().getName() + "]"
-							+ "Could not change cmdTime");
+					sender.sendMessage(ChatColor.RED + "[" + plugin.getDescription().getName() + "]" + "Could not change cmdTime");
 
 				}
 				return true;
 			}
 		}
-		else if(args.length == 1)
+		else if (args.length == 1)
 		{
-			if(mobSpawner.isASupportedMob(args[0]))
+			if (mobSpawner.isASupportedMob(args[0]))
 			{
-				if(plugin.hasPermission((Player) sender, "mobSpawner.command.toggleMob"))
-				if (args[0].length() < 2 || null == args[0]) return true;
+				if (plugin.hasPermission((Player) sender, "mobSpawner.command.toggleMob")) if (args[0].length() < 2 || null == args[0]) return true;
 				if (args[0].equalsIgnoreCase("PigZombie")) args[0] = "PigZombie";
-				else args[0] = args[0].substring(0, 1).toUpperCase()
-						+ args[0].substring(1).toLowerCase();
-				
+				else args[0] = args[0].substring(0, 1).toUpperCase() + args[0].substring(1).toLowerCase();
+
 				this.toggleSetting("mob." + args[0]);
-				sender.sendMessage(args[0] + " is" + (FileHandler.read("mob." + args[0]).equalsIgnoreCase("true")? " on": " off" ));
+				sender.sendMessage(args[0] + " is" + (FileHandler.read("mob." + args[0]).equalsIgnoreCase("true") ? " on" : " off"));
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	public void toggleSetting(String cmd)
 	{
 		if (FileHandler.read(cmd).equalsIgnoreCase("true"))

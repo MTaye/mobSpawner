@@ -22,8 +22,7 @@ public class mobSpawnerDebugCommand implements CommandExecutor
 		this.plugin = plugin;
 	}
 
-	public boolean onCommand(CommandSender sender, Command cmd,
-			String commandLabel, String[] args)
+	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
 	{
 		if (!(sender instanceof Player)) return true;
 
@@ -47,8 +46,7 @@ public class mobSpawnerDebugCommand implements CommandExecutor
 			return true;
 		}
 
-		if (mobSpawnerDebugCommand.getDebugLevel().equalsIgnoreCase("a"))
-			p.sendMessage("Debug level changed to " + debugLevel);
+		if (mobSpawnerDebugCommand.getDebugLevel().equalsIgnoreCase("a")) p.sendMessage("Debug level changed to " + debugLevel);
 
 		return true;
 	}

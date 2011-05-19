@@ -19,6 +19,7 @@ public class mobSpawnerBlockListener extends BlockListener
 		this.ms = ms;
 	}
 
+	@Override
 	public void onBlockRedstoneChange(BlockRedstoneEvent e)
 	{
 		Block block = e.getBlock();
@@ -40,29 +41,17 @@ public class mobSpawnerBlockListener extends BlockListener
 							if (woerter.length < 1) return;
 							else if (woerter.length == 1)
 							{
-								ms.spawnMob(
-										woerter[0],
-										1,
-										sign.getWorld(),
-										ms.addLineToLocation(sign.getBlock()
-												.getLocation(), sign.getLine(3)));
+								ms.spawnMob(woerter[0], 1, sign.getWorld(), ms.addLineToLocation(sign.getBlock().getLocation(), sign.getLine(3)));
 							}
 							else if (woerter.length == 2)
 							{
 								if (mobSpawner.isADigit(woerter[1]))
 								{
-									ms.spawnMob(woerter[0], Integer
-											.parseInt(woerter[1]), sign
-											.getWorld(), ms.addLineToLocation(
-											sign.getBlock().getLocation(),
-											sign.getLine(3)));
+									ms.spawnMob(woerter[0], Integer.parseInt(woerter[1]), sign.getWorld(), ms.addLineToLocation(sign.getBlock().getLocation(), sign.getLine(3)));
 								}
 								else
 								{
-									ms.spawnMob(woerter[0], 1, sign.getWorld(),
-											ms.addLineToLocation(sign
-													.getBlock().getLocation(),
-													sign.getLine(3)));
+									ms.spawnMob(woerter[0], 1, sign.getWorld(), ms.addLineToLocation(sign.getBlock().getLocation(), sign.getLine(3)));
 								}
 							}
 						}

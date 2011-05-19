@@ -11,6 +11,7 @@ import me.cr3dos.mobSpawner.Commands.mobSpawnerMSsetCommand;
 import me.cr3dos.mobSpawner.Listeners.*;
 import me.cr3dos.mobSpawner.file.FileHandler;
 
+import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.*;
@@ -137,9 +138,29 @@ public class mobSpawner extends JavaPlugin
 	{
 		if (name.length() < 2 || null == name) return;
 		if (name.equalsIgnoreCase("PigZombie")) name = "PigZombie";
-		else name = name.substring(0, 1).toUpperCase()
-				+ name.substring(1).toLowerCase();
-		if(FileHandler.read("mob." + name) == null || FileHandler.read("mob." + name).equalsIgnoreCase("false"))  return;
+		boolean angry = false;
+		DyeColor color = DyeColor.WHITE;
+		boolean colorSheep = false;
+
+		if (name.equalsIgnoreCase("Wolf:Angry"))
+		{
+			name = "Wolf";
+			angry = true;
+		}
+
+		else if (name.length() > 10)
+		{
+			String begin = name.substring(0, 6);
+			if (begin.equalsIgnoreCase("sheep:"))
+			{
+				String x = name.substring(6);
+				color = getDyeColorFromName(x);
+				colorSheep = true;
+				name = "Sheep";
+			}
+		}
+		else name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+		if (FileHandler.read("mob." + name) == null || FileHandler.read("mob." + name).equalsIgnoreCase("false")) return;
 		CreatureType ct = CreatureType.fromName(name);
 		if (ct == null)
 		{
@@ -148,6 +169,28 @@ public class mobSpawner extends JavaPlugin
 
 		for (int i = 0; i < anz; i++)
 		{
+			if (angry == true)
+			{
+				LivingEntity e = world.spawnCreature(location, ct);
+
+				if (e instanceof Wolf)
+				{
+					Wolf w = (Wolf) e;
+					w.setAngry(true);
+				}
+				continue;
+			}
+			if (colorSheep)
+			{
+				LivingEntity e = world.spawnCreature(location, ct);
+
+				if (e instanceof Sheep)
+				{
+					Sheep s = (Sheep) e;
+					s.setColor(color);
+				}
+				continue;
+			}
 			world.spawnCreature(location, ct);
 		}
 	}
@@ -195,35 +238,59 @@ public class mobSpawner extends JavaPlugin
 
 	public static boolean isASupportedMob(String mobname)
 	{
-		if(mobname.equalsIgnoreCase("Pig")) return true;
-	    if(mobname.equalsIgnoreCase("Wolf")) return true;
-	    if(mobname.equalsIgnoreCase("Sheep")) return true;
-	    if(mobname.equalsIgnoreCase("Cow")) return true;
-	    if(mobname.equalsIgnoreCase("Spider")) return true;
-	    if(mobname.equalsIgnoreCase("Zombie")) return true;
-		if(mobname.equalsIgnoreCase("Skeleton")) return true;
-	    if(mobname.equalsIgnoreCase("Chicken")) return true;
-	    if(mobname.equalsIgnoreCase("Squid")) return true;
-	    if(mobname.equalsIgnoreCase("PigZombie")) return true;
-	    if(mobname.equalsIgnoreCase("Creeper")) return true;
-	    if(mobname.equalsIgnoreCase("Ghast")) return true;
-	    if(mobname.equalsIgnoreCase("slime")) return true;
+		if (mobname.equalsIgnoreCase("Pig")) return true;
+		if (mobname.equalsIgnoreCase("Wolf")) return true;
+		if (mobname.equalsIgnoreCase("Wolf:Angry")) return true;
+		if (mobname.equalsIgnoreCase("Sheep")) return true;
+		if (mobname.equalsIgnoreCase("Cow")) return true;
+		if (mobname.equalsIgnoreCase("Spider")) return true;
+		if (mobname.equalsIgnoreCase("Zombie")) return true;
+		if (mobname.equalsIgnoreCase("Skeleton")) return true;
+		if (mobname.equalsIgnoreCase("Chicken")) return true;
+		if (mobname.equalsIgnoreCase("Squid")) return true;
+		if (mobname.equalsIgnoreCase("PigZombie")) return true;
+		if (mobname.equalsIgnoreCase("Creeper")) return true;
+		if (mobname.equalsIgnoreCase("Ghast")) return true;
+		if (mobname.equalsIgnoreCase("slime")) return true;
 		return false;
 	}
+
+	private DyeColor getDyeColorFromName(String x)
+	{
+		DyeColor c;
+
+		if (x.equalsIgnoreCase("orange")) c = DyeColor.ORANGE;
+		else if (x.equalsIgnoreCase("magenta")) c = DyeColor.MAGENTA;
+		else if (x.equalsIgnoreCase("LIGHT_BLUE")) c = DyeColor.LIGHT_BLUE;
+		else if (x.equalsIgnoreCase("Lime")) c = DyeColor.LIME;
+		else if (x.equalsIgnoreCase("PINK")) c = DyeColor.PINK;
+		else if (x.equalsIgnoreCase("Silver")) c = DyeColor.SILVER;
+		else if (x.equalsIgnoreCase("CYAN")) c = DyeColor.CYAN;
+		else if (x.equalsIgnoreCase("PURPLE")) c = DyeColor.PURPLE;
+		else if (x.equalsIgnoreCase("black")) c = DyeColor.BLACK;
+		else if (x.equalsIgnoreCase("brown")) c = DyeColor.BROWN;
+		else if (x.equalsIgnoreCase("blue")) c = DyeColor.BLUE;
+		else if (x.equalsIgnoreCase("GRAY")) c = DyeColor.GRAY;
+		else if (x.equalsIgnoreCase("GREEN")) c = DyeColor.GREEN;
+		else if (x.equalsIgnoreCase("RED")) c = DyeColor.RED;
+		else if (x.equalsIgnoreCase("YELLOW")) c = DyeColor.YELLOW;
+		else c = DyeColor.WHITE;
+
+		return c;
+	}
+
 	/*----------------------------------------------*/
 	/* Permission */
 	/*----------------------------------------------*/
 	private void setupPermissions()
 	{
-		Plugin permissionsPlugin = this.getServer().getPluginManager()
-				.getPlugin("Permissions");
+		Plugin permissionsPlugin = this.getServer().getPluginManager().getPlugin("Permissions");
 
 		if (mobSpawner.permissionHandler == null)
 		{
 			if (permissionsPlugin != null)
 			{
-				mobSpawner.permissionHandler = ((Permissions) permissionsPlugin)
-						.getHandler();
+				mobSpawner.permissionHandler = ((Permissions) permissionsPlugin).getHandler();
 			}
 			else
 			{

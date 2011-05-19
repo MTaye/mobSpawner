@@ -29,6 +29,7 @@ public class mobSpawnerPlayerListener extends PlayerListener
 		this.ms = ms;
 	}
 
+	@Override
 	public void onPlayerInteract(PlayerInteractEvent e)
 	{
 
@@ -60,11 +61,7 @@ public class mobSpawnerPlayerListener extends PlayerListener
 				if (state instanceof Sign)
 				{
 					s = (Sign) state;
-					if (mobSpawnerDebugCommand.getDebugLevel()
-							.equalsIgnoreCase("a")
-							|| mobSpawnerDebugCommand.getDebugLevel()
-									.equalsIgnoreCase("b"))
-						p.sendMessage(p.getName() + "pressed sign");
+					if (mobSpawnerDebugCommand.getDebugLevel().equalsIgnoreCase("a") || mobSpawnerDebugCommand.getDebugLevel().equalsIgnoreCase("b")) p.sendMessage(p.getName() + "pressed sign");
 					Date d1 = new Date();
 					users.put(p.getName(), d1);
 					signPress(p, s);
@@ -91,29 +88,17 @@ public class mobSpawnerPlayerListener extends PlayerListener
 			if (woerter.length < 1) return;
 			else if (woerter.length == 1)
 			{
-				ms.spawnMob(
-						woerter[0],
-						1,
-						ms.addLineToLocation(s.getBlock().getLocation(),
-								s.getLine(3)), p);
+				ms.spawnMob(woerter[0], 1, ms.addLineToLocation(s.getBlock().getLocation(), s.getLine(3)), p);
 			}
 			else if (woerter.length == 2)
 			{
 				if (mobSpawner.isADigit(woerter[1]))
 				{
-					ms.spawnMob(
-							woerter[0],
-							Integer.parseInt(woerter[1]),
-							ms.addLineToLocation(s.getBlock().getLocation(),
-									s.getLine(3)), p);
+					ms.spawnMob(woerter[0], Integer.parseInt(woerter[1]), ms.addLineToLocation(s.getBlock().getLocation(), s.getLine(3)), p);
 				}
 				else
 				{
-					ms.spawnMob(
-							woerter[0],
-							1,
-							ms.addLineToLocation(s.getBlock().getLocation(),
-									s.getLine(3)), p);
+					ms.spawnMob(woerter[0], 1, ms.addLineToLocation(s.getBlock().getLocation(), s.getLine(3)), p);
 				}// if word not a digit
 			}// are 2 words on the line
 		}// for every line

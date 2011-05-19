@@ -26,8 +26,7 @@ public class mobSpawnerMSCommand implements CommandExecutor
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd,
-			String commandLabel, String[] args)
+	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
 	{
 		if (!(sender instanceof Player)) return false;
 
@@ -50,8 +49,7 @@ public class mobSpawnerMSCommand implements CommandExecutor
 
 		if (args.length == 1)
 		{
-			String s = args[0].substring(0, 1).toUpperCase()
-					+ args[0].substring(1).toLowerCase();
+			String s = args[0].substring(0, 1).toUpperCase() + args[0].substring(1).toLowerCase();
 
 			Location l = p.getTargetBlock(null, 150).getLocation();
 
@@ -61,8 +59,7 @@ public class mobSpawnerMSCommand implements CommandExecutor
 		}
 		if (args.length == 2 || args.length == 3)
 		{
-			String s = args[0].substring(0, 1).toUpperCase()
-					+ args[0].substring(1).toLowerCase();
+			String s = args[0].substring(0, 1).toUpperCase() + args[0].substring(1).toLowerCase();
 
 			Location l = null;
 			int max = 0;
