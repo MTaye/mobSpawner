@@ -89,6 +89,9 @@ public class mobSpawnerMSCommand implements CommandExecutor
 				if (args.length == 1)
 				{
 					l = p.getTargetBlock(null, 150).getLocation();
+					
+					//Block[] blocks = mobSpawner.getBlocks(l, p.getWorld());
+					
 					max = 1;
 				}
 				else if (args.length == 2)

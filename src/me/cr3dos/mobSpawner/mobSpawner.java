@@ -14,6 +14,7 @@ import me.cr3dos.mobSpawner.file.FileHandler;
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
@@ -310,5 +311,10 @@ public class mobSpawner extends JavaPlugin
 			return true;
 		}
 		return false;
+	}
+
+	public static Block[] getBlocks(Location l, World world)
+	{
+		return null;
 	}
 }
