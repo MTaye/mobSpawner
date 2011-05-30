@@ -37,7 +37,7 @@ public class MSSetSpawnCommand implements CommandExecutor
 		if (null == l) return true;
 		Block mobSpawner = p.getWorld().getBlockAt(l);
 		if (mobSpawner.getType() != Material.MOB_SPAWNER) return true;
-		CreatureSpawner spawner = (CreatureSpawner) mobSpawner;
+		CreatureSpawner spawner = (CreatureSpawner)mobSpawner.getState();
 
 		CreatureType ct = getTyp(args[0]);
 		if (null == ct) return true;

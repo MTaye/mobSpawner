@@ -28,16 +28,16 @@ public class MobSpawnerPlayerListenerTwo extends PlayerListener
 	public void onPlayerInteract(PlayerInteractEvent e)
 	{
 		Player p = e.getPlayer();
-		Material itemMaterial = e.getItem().getType();
 		Action a = e.getAction();
-
 		Material spawnMat = Material.getMaterial(FileHandler.readInt("spawnItem"));
 
 		if (!plugin.hasPermission(p, "mobSpawner.setSpawn")) return;
-		if (null == spawnMat) return;
-		if (itemMaterial.getId() != spawnMat.getId()) return;
-		if (a == Action.RIGHT_CLICK_BLOCK || a == Action.RIGHT_CLICK_AIR)
+		
+		if (a == Action.RIGHT_CLICK_BLOCK)
 		{
+			Material itemMaterial = e.getItem().getType();
+			if (null == spawnMat) return;
+			if (itemMaterial.getId() != spawnMat.getId()) return;
 			users.put(p.getName(), e.getClickedBlock().getLocation());
 		}
 	}
