@@ -1,4 +1,4 @@
-package me.cr3dos.mobSpawner.Commands;
+package me.cr3dos.mobSpawner.commands;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -6,15 +6,15 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import me.cr3dos.mobSpawner.mobSpawner;
+import me.cr3dos.mobSpawner.MobSpawner;
 import me.cr3dos.mobSpawner.file.*;
 
-public class mobSpawnerMSsetCommand implements CommandExecutor
+public class MSsetCommand implements CommandExecutor
 {
 
-	mobSpawner plugin;
+	MobSpawner plugin;
 
-	public mobSpawnerMSsetCommand(mobSpawner plugin)
+	public MSsetCommand(MobSpawner plugin)
 	{
 		this.plugin = plugin;
 	}
@@ -34,7 +34,6 @@ public class mobSpawnerMSsetCommand implements CommandExecutor
 				if (FileHandler.writeInt("signTime", args[1]) == false)
 				{
 					sender.sendMessage(ChatColor.RED + "[" + plugin.getDescription().getName() + "]" + "Could not change signTime");
-
 				}
 				return true;
 			}
@@ -43,14 +42,21 @@ public class mobSpawnerMSsetCommand implements CommandExecutor
 				if (FileHandler.writeInt("cmdTime", args[1]) == false)
 				{
 					sender.sendMessage(ChatColor.RED + "[" + plugin.getDescription().getName() + "]" + "Could not change cmdTime");
-
+				}
+				return true;
+			}
+			else if (args[0].equalsIgnoreCase("spawnItem"))
+			{
+				if (FileHandler.writeInt("spawnItem", args[1]) == false)
+				{
+					sender.sendMessage(ChatColor.RED + "[" + plugin.getDescription().getName() + "]" + "Could not change spawnItem");
 				}
 				return true;
 			}
 		}
 		else if (args.length == 1)
 		{
-			if (mobSpawner.isASupportedMob(args[0]))
+			if (MobSpawner.isASupportedMob(args[0]))
 			{
 				if (plugin.hasPermission((Player) sender, "mobSpawner.command.toggleMob")) if (args[0].length() < 2 || null == args[0]) return true;
 				if (args[0].equalsIgnoreCase("PigZombie")) args[0] = "PigZombie";

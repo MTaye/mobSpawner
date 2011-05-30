@@ -1,6 +1,6 @@
-package me.cr3dos.mobSpawner.Commands;
+package me.cr3dos.mobSpawner.commands;
 
-import me.cr3dos.mobSpawner.mobSpawner;
+import me.cr3dos.mobSpawner.MobSpawner;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -10,18 +10,19 @@ import org.bukkit.entity.Player;
 /**
  * DebugLevels a = allStuff b = important Stuff other = nothing
  */
-public class mobSpawnerDebugCommand implements CommandExecutor
+public class DebugCommand implements CommandExecutor
 {
 
-	mobSpawner plugin;
+	MobSpawner plugin;
 	private static String debugLevel;
 
-	public mobSpawnerDebugCommand(mobSpawner plugin)
+	public DebugCommand(MobSpawner plugin)
 	{
 		debugLevel = null;
 		this.plugin = plugin;
 	}
 
+	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
 	{
 		if (!(sender instanceof Player)) return true;
@@ -34,19 +35,25 @@ public class mobSpawnerDebugCommand implements CommandExecutor
 		}
 		if (args.length == 0)
 		{
-			p.sendMessage(mobSpawnerDebugCommand.getDebugLevel());
+			p.sendMessage(DebugCommand.getDebugLevel());
 			return true;
 		}
 		if (args.length != 1) return false;
 
-		if (args[0].equalsIgnoreCase("a") || args[0].equalsIgnoreCase("b")) debugLevel = args[0];
+		if (args[0].equalsIgnoreCase("a") || args[0].equalsIgnoreCase("b"))
+		{
+			debugLevel = args[0];
+		}
 		else
 		{
 			debugLevel = null;
 			return true;
 		}
 
-		if (mobSpawnerDebugCommand.getDebugLevel().equalsIgnoreCase("a")) p.sendMessage("Debug level changed to " + debugLevel);
+		if (DebugCommand.getDebugLevel().equalsIgnoreCase("a"))
+		{
+			p.sendMessage("Debug level changed to " + debugLevel);
+		}
 
 		return true;
 	}

@@ -1,6 +1,6 @@
-package me.cr3dos.mobSpawner.Listeners;
+package me.cr3dos.mobSpawner.listeners;
 
-import me.cr3dos.mobSpawner.mobSpawner;
+import me.cr3dos.mobSpawner.MobSpawner;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -9,14 +9,14 @@ import org.bukkit.block.Sign;
 import org.bukkit.event.block.BlockListener;
 import org.bukkit.event.block.BlockRedstoneEvent;
 
-public class mobSpawnerBlockListener extends BlockListener
+public class MobSpawnerBlockListener extends BlockListener
 {
-	mobSpawner ms = null;
+	MobSpawner plugin;
 	public BlockFace[] faces = BlockFace.values();
 
-	public mobSpawnerBlockListener(mobSpawner ms)
+	public MobSpawnerBlockListener(MobSpawner ms)
 	{
-		this.ms = ms;
+		this.plugin = ms;
 	}
 
 	@Override
@@ -41,17 +41,17 @@ public class mobSpawnerBlockListener extends BlockListener
 							if (woerter.length < 1) return;
 							else if (woerter.length == 1)
 							{
-								ms.spawnMob(woerter[0], 1, sign.getWorld(), ms.addLineToLocation(sign.getBlock().getLocation(), sign.getLine(3)));
+								plugin.spawnMob(woerter[0], 1, sign.getWorld(), plugin.addLineToLocation(sign.getBlock().getLocation(), sign.getLine(3)));
 							}
 							else if (woerter.length == 2)
 							{
-								if (mobSpawner.isADigit(woerter[1]))
+								if (MobSpawner.isADigit(woerter[1]))
 								{
-									ms.spawnMob(woerter[0], Integer.parseInt(woerter[1]), sign.getWorld(), ms.addLineToLocation(sign.getBlock().getLocation(), sign.getLine(3)));
+									plugin.spawnMob(woerter[0], Integer.parseInt(woerter[1]), sign.getWorld(), plugin.addLineToLocation(sign.getBlock().getLocation(), sign.getLine(3)));
 								}
 								else
 								{
-									ms.spawnMob(woerter[0], 1, sign.getWorld(), ms.addLineToLocation(sign.getBlock().getLocation(), sign.getLine(3)));
+									plugin.spawnMob(woerter[0], 1, sign.getWorld(), plugin.addLineToLocation(sign.getBlock().getLocation(), sign.getLine(3)));
 								}
 							}
 						}

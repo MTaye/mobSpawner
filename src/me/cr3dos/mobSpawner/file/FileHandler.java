@@ -2,7 +2,7 @@ package me.cr3dos.mobSpawner.file;
 
 import java.io.File;
 
-import me.cr3dos.mobSpawner.mobSpawner;
+import me.cr3dos.mobSpawner.MobSpawner;
 
 import org.bukkit.util.config.Configuration;
 
@@ -77,6 +77,7 @@ public class FileHandler
 		if (null == config.getProperty("mob.Creeper")) write("mob.Creeper", "true");
 		if (null == config.getProperty("mob.Ghast")) write("mob.Ghast", "true");
 		if (null == config.getProperty("mob.Slime")) write("mob.Slime", "true");
+		if (null == config.getProperty("spawnItem")) write("spawnItem", "270");
 	}
 
 	private static void deletSecondFolder()
@@ -104,6 +105,10 @@ public class FileHandler
 	/*----------------------------------------------*/
 	public static void write(String key, String input)
 	{
+		if (null == config)
+		{
+			config = load();
+		}
 		config.setProperty(key, input);
 		config.save();
 		deletSecondFolder();
@@ -117,8 +122,12 @@ public class FileHandler
 	 */
 	public static boolean writeInt(String key, String input)
 	{
-		if (mobSpawner.isADigit(input))
+		if (MobSpawner.isADigit(input))
 		{
+			if (null == config)
+			{
+				config = load();
+			}
 			config.setProperty(key, input);
 			config.save();
 			deletSecondFolder();
@@ -134,11 +143,19 @@ public class FileHandler
 	/*----------------------------------------------*/
 	public static String read(String root)
 	{
+		if (null == config)
+		{
+			config = load();
+		}
 		return config.getString(root);
 	}
 
 	public static int readInt(String root)
 	{
+		if (null == config)
+		{
+			config = load();
+		}
 		String s = config.getString(root);
 		if (null == s)
 		{

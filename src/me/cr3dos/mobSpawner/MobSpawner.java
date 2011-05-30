@@ -5,16 +5,17 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.logging.Logger;
 
-import me.cr3dos.mobSpawner.Commands.mobSpawnerDebugCommand;
-import me.cr3dos.mobSpawner.Commands.mobSpawnerMSCommand;
-import me.cr3dos.mobSpawner.Commands.mobSpawnerMSsetCommand;
-import me.cr3dos.mobSpawner.Listeners.*;
+import me.cr3dos.mobSpawner.commands.DebugCommand;
+import me.cr3dos.mobSpawner.commands.MSCommand;
+import me.cr3dos.mobSpawner.commands.MSSetSpawnCommand;
+import me.cr3dos.mobSpawner.commands.MSgetItem;
+import me.cr3dos.mobSpawner.commands.MSsetCommand;
 import me.cr3dos.mobSpawner.file.FileHandler;
+import me.cr3dos.mobSpawner.listeners.*;
 
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
@@ -30,15 +31,15 @@ import org.bukkit.plugin.Plugin;
  * @author: cr3dos
  * @version: 1.0
  */
-public class mobSpawner extends JavaPlugin
+public class MobSpawner extends JavaPlugin
 {
 
 	public static PermissionHandler permissionHandler;
 
 	PluginDescriptionFile pdfFile;
-	mobSpawnerPlayerListener mspl = null;
-	mobSpawnerBlockListener msbl = null;
-	mobSpawnerDebugCommand msDebug = null;
+	MobSpawnerPlayerListener mspl = null;
+	MobSpawnerBlockListener msbl = null;
+	DebugCommand msDebug = null;
 	private static final Logger log = Logger.getLogger("Minecraft");
 
 	/*----------------------------------------------*/
@@ -54,18 +55,22 @@ public class mobSpawner extends JavaPlugin
 	public void onEnable()
 	{
 		PluginManager pm = getServer().getPluginManager();
-		mspl = new mobSpawnerPlayerListener(this);
-		msbl = new mobSpawnerBlockListener(this);
-		msDebug = new mobSpawnerDebugCommand(this);
+		mspl = new MobSpawnerPlayerListener(this);
+		msbl = new MobSpawnerBlockListener(this);
+		msDebug = new DebugCommand(this);
+		MobSpawnerPlayerListenerTwo msplt = new MobSpawnerPlayerListenerTwo(this);
 
 		pm.registerEvent(Type.PLAYER_INTERACT, mspl, Priority.Normal, this);
+		pm.registerEvent(Type.PLAYER_INTERACT, msplt, Priority.Normal, this);
 		pm.registerEvent(Type.REDSTONE_CHANGE, this.msbl, Priority.Normal, this);
 
-		mobSpawnerMSCommand msCommand = new mobSpawnerMSCommand(this);
-		mobSpawnerMSsetCommand msSetCommand = new mobSpawnerMSsetCommand(this);
+		MSCommand msCommand = new MSCommand(this);
+		MSsetCommand msSetCommand = new MSsetCommand(this);
 		getCommand("ms").setExecutor(msCommand);
 		getCommand("msset").setExecutor(msSetCommand);
 		getCommand("msdebug").setExecutor(msDebug);
+		getCommand("mssetspawn").setExecutor(new MSSetSpawnCommand(this, msplt));
+		getCommand("msitem").setExecutor(new MSgetItem(this));
 
 		setupPermissions();
 		FileHandler.onStartUp();
@@ -138,7 +143,6 @@ public class mobSpawner extends JavaPlugin
 	public void spawnMob(String name, int anz, World world, Location location)
 	{
 		if (name.length() < 2 || null == name) return;
-		if (name.equalsIgnoreCase("PigZombie")) name = "PigZombie";
 		boolean angry = false;
 		DyeColor color = DyeColor.WHITE;
 		boolean colorSheep = false;
@@ -148,7 +152,6 @@ public class mobSpawner extends JavaPlugin
 			name = "Wolf";
 			angry = true;
 		}
-
 		else if (name.length() > 10)
 		{
 			String begin = name.substring(0, 6);
@@ -160,7 +163,15 @@ public class mobSpawner extends JavaPlugin
 				name = "Sheep";
 			}
 		}
-		else name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+		else if (name.equalsIgnoreCase("PigZombie"))
+		{
+			name = "PigZombie";
+		}
+		else
+		{
+			name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+		}
+
 		if (FileHandler.read("mob." + name) == null || FileHandler.read("mob." + name).equalsIgnoreCase("false")) return;
 		CreatureType ct = CreatureType.fromName(name);
 		if (ct == null)
@@ -287,11 +298,11 @@ public class mobSpawner extends JavaPlugin
 	{
 		Plugin permissionsPlugin = this.getServer().getPluginManager().getPlugin("Permissions");
 
-		if (mobSpawner.permissionHandler == null)
+		if (MobSpawner.permissionHandler == null)
 		{
 			if (permissionsPlugin != null)
 			{
-				mobSpawner.permissionHandler = ((Permissions) permissionsPlugin).getHandler();
+				MobSpawner.permissionHandler = ((Permissions) permissionsPlugin).getHandler();
 			}
 			else
 			{
@@ -306,15 +317,11 @@ public class mobSpawner extends JavaPlugin
 		{
 			return p.isOp();
 		}
-		if (mobSpawner.permissionHandler.has(p, s))
+		if (MobSpawner.permissionHandler.has(p, s))
 		{
 			return true;
 		}
 		return false;
 	}
 
-	public static Block[] getBlocks(Location l, World world)
-	{
-		return null;
-	}
 }

@@ -1,10 +1,13 @@
 name: mobSpawner
-main: me.cr3dos.mobSpawner.mobSpawner
-version: 1.5
+main: me.cr3dos.mobSpawner.MobSpawner
+version: 1.7
 author: cr3dos
 description: >
              A Plugin for spawn mobs
 commands:
+  msitem:
+    description: get the item
+    usage: /msitem <itemname> (<amount>)
   ms:
     description: spawn mobs
     usage: /ms <mobname> (<amount>) (<Player>)
@@ -14,3 +17,6 @@ commands:
   msdebug:
     description: changing Debuglevel
     usage: /msdebug <level> 
+  mssetspawn:
+    description: change the creature typ of a spawn
+    usage: /mssetspawn <mobname>     

@@ -1,10 +1,10 @@
-package me.cr3dos.mobSpawner.Listeners;
+package me.cr3dos.mobSpawner.listeners;
 
 import java.util.Date;
 import java.util.HashMap;
 
-import me.cr3dos.mobSpawner.mobSpawner;
-import me.cr3dos.mobSpawner.Commands.mobSpawnerDebugCommand;
+import me.cr3dos.mobSpawner.MobSpawner;
+import me.cr3dos.mobSpawner.commands.DebugCommand;
 import me.cr3dos.mobSpawner.file.FileHandler;
 
 import org.bukkit.Material;
@@ -18,15 +18,15 @@ import org.bukkit.event.player.PlayerListener;
  * @author: cr3dos
  * @version: 1.0
  */
-public class mobSpawnerPlayerListener extends PlayerListener
+public class MobSpawnerPlayerListener extends PlayerListener
 {
-	mobSpawner ms = null;
+	MobSpawner plugin;
 	HashMap<String, Date> users;
 
-	public mobSpawnerPlayerListener(mobSpawner ms)
+	public MobSpawnerPlayerListener(MobSpawner ms)
 	{
 		users = new HashMap<String, Date>(); // signpress
-		this.ms = ms;
+		this.plugin = ms;
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class mobSpawnerPlayerListener extends PlayerListener
 
 		if (users.containsKey(p.getName()))
 		{
-			int diff = ms.differenz(new Date(), users.get(p.getName()));
+			int diff = plugin.differenz(new Date(), users.get(p.getName()));
 			if (FileHandler.readInt("signTime") >= diff)
 			{
 				return;
@@ -47,10 +47,11 @@ public class mobSpawnerPlayerListener extends PlayerListener
 
 		Block b = e.getClickedBlock();
 		Action a = e.getAction();
-		if (!ms.hasPermission(p, "mobSpawner.sign"))
+		if (!plugin.hasPermission(p, "mobSpawner.sign"))
 		{
 			return;
 		}
+
 		if (a == Action.RIGHT_CLICK_AIR || a == Action.RIGHT_CLICK_BLOCK)
 		{
 			if (null == b) return;
@@ -61,7 +62,7 @@ public class mobSpawnerPlayerListener extends PlayerListener
 				if (state instanceof Sign)
 				{
 					s = (Sign) state;
-					if (mobSpawnerDebugCommand.getDebugLevel().equalsIgnoreCase("a") || mobSpawnerDebugCommand.getDebugLevel().equalsIgnoreCase("b")) p.sendMessage(p.getName() + "pressed sign");
+					if (DebugCommand.getDebugLevel().equalsIgnoreCase("a") || DebugCommand.getDebugLevel().equalsIgnoreCase("b")) p.sendMessage(p.getName() + "pressed sign");
 					Date d1 = new Date();
 					users.put(p.getName(), d1);
 					signPress(p, s);
@@ -88,17 +89,17 @@ public class mobSpawnerPlayerListener extends PlayerListener
 			if (woerter.length < 1) return;
 			else if (woerter.length == 1)
 			{
-				ms.spawnMob(woerter[0], 1, ms.addLineToLocation(s.getBlock().getLocation(), s.getLine(3)), p);
+				plugin.spawnMob(woerter[0], 1, plugin.addLineToLocation(s.getBlock().getLocation(), s.getLine(3)), p);
 			}
 			else if (woerter.length == 2)
 			{
-				if (mobSpawner.isADigit(woerter[1]))
+				if (MobSpawner.isADigit(woerter[1]))
 				{
-					ms.spawnMob(woerter[0], Integer.parseInt(woerter[1]), ms.addLineToLocation(s.getBlock().getLocation(), s.getLine(3)), p);
+					plugin.spawnMob(woerter[0], Integer.parseInt(woerter[1]), plugin.addLineToLocation(s.getBlock().getLocation(), s.getLine(3)), p);
 				}
 				else
 				{
-					ms.spawnMob(woerter[0], 1, ms.addLineToLocation(s.getBlock().getLocation(), s.getLine(3)), p);
+					plugin.spawnMob(woerter[0], 1, plugin.addLineToLocation(s.getBlock().getLocation(), s.getLine(3)), p);
 				}// if word not a digit
 			}// are 2 words on the line
 		}// for every line
