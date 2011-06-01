@@ -35,6 +35,7 @@ public class MobSpawnerPlayerListenerTwo extends PlayerListener
 		
 		if (a == Action.RIGHT_CLICK_BLOCK)
 		{
+			if(null == e.getItem()) return;
 			Material itemMaterial = e.getItem().getType();
 			if (null == spawnMat) return;
 			if (itemMaterial.getId() != spawnMat.getId()) return;
