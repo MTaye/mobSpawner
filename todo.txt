@@ -1,1 +1,2 @@
--Use signTime for redstone
+- Use signTime for redstone
+- {player} on a sign

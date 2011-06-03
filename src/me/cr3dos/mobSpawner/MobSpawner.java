@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import me.cr3dos.mobSpawner.commands.DebugCommand;
 import me.cr3dos.mobSpawner.commands.MSCommand;
@@ -90,11 +92,28 @@ public class MobSpawner extends JavaPlugin
 	 */
 	public Location addLineToLocation(Location location, String line)
 	{
-		if (line.trim().equals(""))
-		;
+		if (line.trim().equals("")) return location;
 		String[] woerter = line.trim().split(" ");
 
 		int numb = 0;
+		
+		if(woerter.length == 1)
+		{
+			Player p = null;
+			
+			Pattern pat = Pattern.compile("\\{[\\w]+\\}");
+			Matcher m = pat.matcher(woerter[0]);
+			
+			if(m.find())
+			{
+				String match = m.group();
+				match = match.substring(1, match.length() - 1);
+				
+				p = getServer().getPlayer(match);
+			}
+			if(null == p) return location;
+			return p.getLocation();
+		}
 		if (woerter.length < 2 || !isADigit(woerter[1]))
 		{
 			return location;
