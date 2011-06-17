@@ -3,6 +3,7 @@ package me.cr3dos.mobSpawner;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -239,6 +240,39 @@ public class MobSpawner extends JavaPlugin
 		this.spawnMob(name, anz, p.getWorld(), location);
 	}
 
+	public void killMob(String name, World world)
+	{
+		if (name.equalsIgnoreCase("PigZombie")) name = "PigZombie";
+		else name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+		CreatureType ct = CreatureType.fromName(name);
+		if(ct == null) return;
+		
+		List<LivingEntity> mobs = world.getLivingEntities();
+		
+		for(LivingEntity lt : mobs)
+		{
+			if(!(lt instanceof Player))
+			{
+				//ToDO 
+			}
+		}
+	}
+	
+	public void killAllMobs(World world)
+	{
+		List<LivingEntity> mobs = world.getLivingEntities();
+		
+		for(LivingEntity lt : mobs)
+		{
+			//ToDO 
+		}
+	}
+	
+	public void killMob(String name, Player p)
+	{
+		killMob(name,p.getWorld());
+	}
+	
 	public int differenz(Date now, Date old)
 	{
 		Calendar cal_1 = new GregorianCalendar();
@@ -250,7 +284,7 @@ public class MobSpawner extends JavaPlugin
 
 		return s;
 	}
-
+	
 	/*----------------------------------------------*/
 	/* Checker */
 	/*----------------------------------------------*/
