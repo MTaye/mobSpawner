@@ -25,9 +25,11 @@ public class MobSpawnerBlockListener extends BlockListener
 		Block block = e.getBlock();
 		if (e.getOldCurrent() == 0 && e.getNewCurrent() > 0)
 		{
-			for (int i = 0; i < 6; i++)
+			for (int i = 0; i < 5; i++)
 			{
-				Block b = block.getRelative(faces[i]);
+				Block b;
+				if(i<4)	b = block.getRelative(faces[i]);
+				else b = block.getRelative(0, 2, 0);
 				if (b.getType() == Material.SIGN_POST)
 				{
 					Sign sign = (Sign) b.getState();
